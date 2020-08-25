@@ -1,0 +1,44 @@
+* {
+    box-sizing: border-box;
+    margin:0;
+    padding:0;
+    border-radius: 1%;
+    }
+
+.header{
+    display:inline-block;
+    background-color:grey;
+    width:100%;
+    text-align:center;  
+    padding:20px;
+}
+
+.headerPicture{
+    padding:20px;
+    background-color:lightgrey;
+}
+
+.header ul{
+    padding:20px;
+}
+.header li {
+    display:inline-block;
+    padding:20px;
+    background-color:lightgrey;
+}
+
+.displayBox{
+    background-color: grey;
+    border: 5px solid black;
+}
+
+.startQuiz{
+    background-color: orange;
+    padding:20px;
+    text-align: center;
+}
+
+.question, .answer, .final {
+    text-align:center;
+    padding:20px;
+}
