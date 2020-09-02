@@ -50,3 +50,60 @@ const STORE = [
         correctAnswer:'Jean Grey',
     }, 
  ];
+
+ function generateQuestion(){
+     //responsible for generating quiz app questions
+     console.log('`generateQuestion` ran');
+ }
+
+ function startQuiz(){
+     //responsible for starting the quiz app
+     //hide all alt boxes
+     //listen for a click on start button
+     //hide startbutton element
+     //add 1 to question count
+     //show question box
+     //question box loads first question
+     console.log('`startQuiz` ran');
+ }
+
+ function submitAnswer(){
+     //responsible for submitting answered questions from the quiz app
+     //listen for when user clicks submit button
+     //hide alt boxes
+     //show response box
+     //evaluate whether question is true or false
+     console.log('`submitAnswer` ran');
+ }
+
+ function nextQuestion(){
+     //responsible for moving to next question on the quiz app
+     //listen for when user clisks on 'next question;
+     //hide alt boxes
+     //show question box
+     //update question number
+     //update with new question
+     console.log('`nextQuestion` ran');
+ }
+
+ function restartQuiz(){
+     //responsible for restarting the quiz app once all questions are answered
+     //listen for when user clicks on restart button
+     //reset question number and score
+     //hide alt boxes
+     //show startQuiz box
+     console.log('`restartQuiz`');
+ }
+
+ //the callback function responsible for running all functions 
+ function makeQuiz(){
+     startQuiz();
+     generateQuestion();
+     submitAnswer();
+     nextQuestion();
+     restartQuiz();
+ }
+
+ $(makeQuiz);
+
+
