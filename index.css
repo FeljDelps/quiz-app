@@ -38,7 +38,7 @@
     text-align: center;
 }
 
-.question, .answer, .final {
+.questionBox, .answer, .final {
     text-align:center;
     padding:20px;
 }

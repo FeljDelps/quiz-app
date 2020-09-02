@@ -51,15 +51,80 @@ const STORE = [
     }, 
  ];
 
- function generateQuestion(){
-     //responsible for generating quiz app questions
-     console.log('`generateQuestion` ran');
- }
-
  let score = 0;
  let questionNumber=0;
- 
- function startQuiz(){
+
+function generateQuestion(){
+     //responsible for generating quiz app questions
+    
+    //function should iterate through the entire STORE
+    if(questionNumber < STORE.length){
+      //function should take objects & create HTML string that will be displayed in the DOM
+      return createThing(questionNumber); 
+    } else{
+      //insert final instructions 
+    }
+     console.log('`generateQuestion` ran');
+}
+
+function createThing(questionIndex){
+   //this function creates the HTML string for objects in STORE that will be used in generateQuestion
+   
+   //the for element, as well as the question, which is setup in a legend element in its own fieldset is created first
+   let formMaker = $(`<form>
+    <fieldset>
+      <legend class='questionText'>${STORE[questionIndex].question}</legend>
+    </fieldset>
+</form>`)
+
+//a variable for the fieldset is created, so that we can easily append the answers to it.
+  let fieldSelector = $(formMaker).find('fieldset');
+
+//here we'll create the html for the answers, and the append it to fieldselector(fieldset element)
+ STORE[questionIndex].answers.forEach(function(answerValue, answerIndex){
+  $(`<label class='sizeMe' for='${answerIndex}'>
+  <input class='radio' type='radio' id='${answerIndex}' value='${answerValue}' name='answer' required>
+  <span>${answerValue}</span>
+</label>`).appendTo(fieldSelector);
+ });
+
+ //here we'll create the html for the answer button, and append it to fieldselector(fieldset element)
+ $(`<button type='submit' class='submitButton button'>Submit</button>`).appendTo(fieldSelector);
+
+//we now return the completed html form element
+ return formMaker;
+}
+
+
+/*
+FORM HTML
+<form>
+    <fieldset>
+      <legend class='questionText'>${STORE[questionIndex].question}</legend>
+    </fieldset>
+<label class='sizeMe' for='${answerIndex}'>
+  <input class='radio' type='radio' id='${answerIndex}' value='${answerValue}' name='answer' required>
+  <span>${answerValue}</span>
+</label>
+<button type='submit' class='submitButton button'>Submit</button>
+</form>
+*/
+
+//this function increments the score variable by 1, then updates the value in the text in the quiz
+function updateScore(){
+  score++;
+  $('.score').text(score);
+}
+
+//this function increments the questionNumber variable by 1, then updates the question number text in the quiz.  Since the questionNumber variable indicates array index and starts at 0, we add +1 to the visible text in the quiz.
+function updateQuestionNumber(){
+  questionNumber++;
+  $('.questionNumber').text(questionNumber+1)
+}
+
+
+
+function startQuiz(){
      //responsible for starting the quiz app
      //hide all alt boxes
      $('.altBox').hide();
@@ -72,18 +137,51 @@ const STORE = [
   //show question box
         $('.questionBox').show();
   //question box loads first question       
-        $('.questionBox').text(`Prior to joining the X-Men, where was Cyclops raised?`);
-        console.log('`startQuiz` ran');     
+       $('.questionBox').prepend(generateQuestion());
+      console.log('`startQuiz` ran')   
     });
 }
 
- function submitAnswer(){
+
+function correctAnswer(){
+  //this function generates when answer is correct, and renders the html for correct answers, which include a heading, picture, and button that leads the user to the next question when clicked, it then updates the score variable as well as the score shown on the quiz
+  $('.answer').html(`
+    <h3>Correct!</h3>
+    <button type='button' class='nextButton button'>Next</button>
+  `);
+  updateScore();
+}
+
+function wrongAnswer(){
+  $('.answer').html(`
+    <h3>Wrong!</h3>
+    <h2>Correct Answer:  <span>${STORE[questionNumber].correctAnswer}</span>
+    <button type='button' 'class'nextButton button'>Next</button>
+  `);
+}
+
+function submitAnswer(){
      //responsible for submitting answered questions from the quiz app
      //listen for when user clicks submit button
-     //hide alt boxes
+  $('.displayBox').on('submit', function(event){
+    event.preventDefault();
+    //hide alt boxes
+    $('.altBox').hide();
      //show response box
-     //evaluate whether question is true or false
+    $('.answer').show();
+    //evaluate whether question is true or false
+    //the next two lines create a variable fron the answer we selected, then grab its value(its text)
+    let selected = $('input:checked');
+    let answer = selected.val();
+    //pull the correct value from the STORE, which you'll access by index according to the questionNumber variable, then assign it to the variable 'correct'
+    let correct = STORE[questionNumber].correctAnswer;
+    if(answer === correct){
+      correctAnswer();
+    }else{
+      wrongAnswer();
+    }
      console.log('`submitAnswer` ran');
+  });        
  }
 
  function nextQuestion(){
@@ -94,26 +192,24 @@ const STORE = [
      //update question number
      //update with new question
      console.log('`nextQuestion` ran');
- }
+}
 
- function restartQuiz(){
+function restartQuiz(){
      //responsible for restarting the quiz app once all questions are answered
      //listen for when user clicks on restart button
      //reset question number and score
      //hide alt boxes
      //show startQuiz box
-     console.log('`restartQuiz`');
- }
+     console.log('`restartQuiz` ran');
+}
 
  //the callback function responsible for running all functions 
- function makeQuiz(){
+function makeQuiz(){
      startQuiz();
      generateQuestion();
      submitAnswer();
      nextQuestion();
      restartQuiz();
- }
+}
 
- $(makeQuiz);
-
-
+$(makeQuiz);
