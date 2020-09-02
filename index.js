@@ -56,16 +56,26 @@ const STORE = [
      console.log('`generateQuestion` ran');
  }
 
+ let score = 0;
+ let questionNumber=0;
+ 
  function startQuiz(){
      //responsible for starting the quiz app
      //hide all alt boxes
+     $('.altBox').hide();
      //listen for a click on start button
-     //hide startbutton element
-     //add 1 to question count
-     //show question box
-     //question box loads first question
-     console.log('`startQuiz` ran');
- }
+     $('.startQuiz').on('click', '.startButton', function(event){
+     //hide startquiz element       
+        $('.startQuiz').hide();
+   //add 1 to question count
+        $('.questionNumber').text(1);
+  //show question box
+        $('.questionBox').show();
+  //question box loads first question       
+        $('.questionBox').text(`Prior to joining the X-Men, where was Cyclops raised?`);
+        console.log('`startQuiz` ran');     
+    });
+}
 
  function submitAnswer(){
      //responsible for submitting answered questions from the quiz app
