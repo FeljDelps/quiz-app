@@ -146,6 +146,8 @@ function submitAnswer(){
 //a variable for the fieldset is created, so that we can easily append the answers to it.
  let fieldSelector = $(formMaker).find('fieldset');
 
+  
+
 //here we'll create the html for the answers, and the append it to fieldselector(fieldset element)
 STORE[questionIndex].answers.forEach(function(answerValue, answerIndex){
  $(`<label class='sizeMe' for='${answerIndex}'>
@@ -155,7 +157,8 @@ STORE[questionIndex].answers.forEach(function(answerValue, answerIndex){
 });
 
 //here we'll create the html for the answer button, and append it to fieldselector(fieldset element)
-$(`<button type='submit' class='submitButton button'>Submit</button>`).appendTo(fieldSelector);
+$(`<img src='compressed photos/shadowcat.png' alt='picture of Shadowcat' class='images' width='200px'>
+<button type='submit' class='submitButton button'>Submit</button>`).appendTo(fieldSelector);
 
 //we now return the completed html form element
 return formMaker;
@@ -179,8 +182,9 @@ FORM HTML
 function correctAnswer(){
   //this function generates when answer is correct, and renders the html for correct answers, which include a heading, picture, and button that leads the user to the next question when clicked, it then updates the score variable as well as the score shown on the quiz
   $('.answer').html(`
-    <h3>Correct!</h3>
-    <img src='compressed photos/storm.jpg' alt='picture of Storm' class='images' width='200px'>
+    <h3 class='questionText'>Correct!</h3>
+    <img src='compressed photos/storm.jpg' alt='picture of Storm' class='images'>
+    <p class='sizeMe'>Storm, mistress of the elements, says "Good job!  Let's try another one."</p>
     <button type='button' class='nextButton button'>Next</button>`
   );
   updateScore();
@@ -188,9 +192,10 @@ function correctAnswer(){
 
 function wrongAnswer(){
   $('.answer').html(`
-    <h3>Wrong!</h3>
-    <h2>Correct Answer:  <span>${STORE[questionNumber].correctAnswer}</span>
-    <img src='compressed photos/magneto.jpg' alt='picture of Magneto' class='images' width='200px'>
+    <h3 class='questionText'>Wrong!</h3>
+    <img src='compressed photos/magneto.jpg' alt='picture of Magneto' class='images'>
+    <h2 class='sizeMe questionText'>Correct Answer:  <span class='sizeMe questionText'>${STORE[questionNumber].correctAnswer}</span>
+    <p class='sizeMe'> Try again, or Magneto's comin for ya'</p>
     <button type='button' class='nextButton button'>Next</button>`
   );
 }
@@ -248,9 +253,9 @@ if(score >= 5){
 // display the final array in 'final' html element
 
 return $('.final').html(
-`<h3>${array[0]}</h3>
+`<h3 class='questionText'>${array[0]}</h3>
 <img src='${array[1]}' alt='${array[2]}' class='images'>
-<h2>Your final score it ${score}/10</h2>
+<h2 class='questionText'>Your final score it ${score}/10</h2>
 <button type='submit' class='restartButton button'>Restart quiz</button>`
 );
 }
